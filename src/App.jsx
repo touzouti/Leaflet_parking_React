@@ -55,7 +55,7 @@ function App() {
       </aside>
 
       <main className="map-container">
-        <ParkingMap />
+     <ParkingMap parkings={parkings} />
       </main>
     </div>
   );
