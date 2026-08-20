@@ -1,3 +1,4 @@
+import ParkingMap from "./Components/ParkingMap";
 function App() {
   return (
     <div className="app">
@@ -25,8 +26,8 @@ function App() {
         </div>
       </aside>
 
-      <main className="map-placeholder">
-        <p>La carte Leaflet arrivera ici 🗺️</p>
+      <main className="map-container">
+        <ParkingMap />
       </main>
     </div>
   );
