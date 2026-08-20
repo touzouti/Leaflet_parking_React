@@ -1,5 +1,26 @@
 import ParkingMap from "./Components/ParkingMap";
+import { useEffect, useState } from "react";
+import { fetchParkings } from "./Services/ParkingAPI";
 function App() {
+  const [parkings, setParkings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function loadParkings() {
+      try {
+        const data = await fetchParkings();
+        setParkings(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadParkings();
+  }, []);
+
   return (
     <div className="app">
       <aside className="sidebar">
@@ -18,11 +39,18 @@ function App() {
         </div>
 
         <div className="parking-list">
-          <div className="parking-card">
-            <h2>Parking exemple</h2>
-            <p>120 places disponibles</p>
-            <p>2,4 km</p>
-          </div>
+          {loading && <p>Chargement des parkings...</p>}
+
+          {error && <p>Erreur : {error}</p>}
+
+          {!loading &&
+            !error &&
+            parkings.map((parking) => (
+              <div className="parking-card" key={parking.id}>
+                <h2>{parking.name}</h2>
+                <p>{parking.available} places disponibles</p>
+              </div>
+            ))}
         </div>
       </aside>
 
