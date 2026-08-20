@@ -1,6 +1,7 @@
-import ParkingMap from "./Components/ParkingMap";
 import { useEffect, useState } from "react";
+import ParkingMap from "./Components/ParkingMap";
 import { fetchParkings } from "./Services/ParkingAPI";
+
 function App() {
   const [parkings, setParkings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,9 @@ function App() {
 
   return (
     <div className="app">
+
       <aside className="sidebar">
+
         <h1>Parking Toulouse</h1>
 
         <input
@@ -39,6 +42,7 @@ function App() {
         </div>
 
         <div className="parking-list">
+
           {loading && <p>Chargement des parkings...</p>}
 
           {error && <p>Erreur : {error}</p>}
@@ -47,16 +51,34 @@ function App() {
             !error &&
             parkings.map((parking) => (
               <div className="parking-card" key={parking.id}>
+
                 <h2>{parking.name}</h2>
-                <p>{parking.available} places disponibles</p>
+
+                <p>🅿️ {parking.total} places au total</p>
+
+                <p>🚗 {parking.carPlaces} places voitures</p>
+
+                <p>♿ {parking.pmrPlaces} places PMR</p>
+
+                <p>🚲 {parking.bikePlaces} places vélos</p>
+
+                <p>
+                  {parking.free
+                    ? "✅ Parking gratuit"
+                    : "💳 Parking payant"}
+                </p>
+
               </div>
             ))}
+
         </div>
+
       </aside>
 
       <main className="map-container">
-     <ParkingMap parkings={parkings} />
+        <ParkingMap parkings={parkings} />
       </main>
+
     </div>
   );
 }

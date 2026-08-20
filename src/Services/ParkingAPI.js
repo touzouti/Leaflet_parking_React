@@ -10,11 +10,15 @@ export async function fetchParkings() {
 
   const data = await response.json();
 
-
   return data.records.map((record) => ({
     id: record.recordid,
     name: record.fields.nom,
-    available: record.fields.places || 0,
+    total: record.fields.nb_places ?? 0,
+    carPlaces: record.fields.nb_voitures ?? 0,
+    pmrPlaces: record.fields.nb_pmr ?? 0,
+    bikePlaces: record.fields.nb_velo ?? 0,
+    address: record.fields.adresse ?? "Adresse inconnue",
+    free: record.fields.gratuit === "T",
     position: record.fields.geo_point_2d,
   }));
 }
